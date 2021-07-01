@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys.js');
 const User = require('../models/User.js');
+const errorHandler = require('../utils/errorHandler.js');
 
 module.exports.login = async (req, res) => {
     const candidate = await User.findOne({
@@ -52,7 +53,7 @@ module.exports.register = async (req, res) => {
             await user.save();
             res.status(201).json(user);
         } catch(e) {
-            console.log(e);
+            errorHandler(res, e);
         }
     }
 };
